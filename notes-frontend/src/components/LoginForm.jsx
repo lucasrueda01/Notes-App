@@ -1,15 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "../App.css";
 import { USERADMIN } from "../consts";
 
-export default function LoginForm({ onSubmit }) {
+export default function LoginForm({ onSubmit, onMount }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [failed, setFailed] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    onMount();
+  }, []);
 
   const handleUserChange = (e) => {
     setUsername(e.target.value);
