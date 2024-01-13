@@ -46,7 +46,7 @@ export default function AddForm() {
             required
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Group className="mb-3" controlId="formBasicDescription">
           <Form.Label>Description</Form.Label>
           <Form.Control
             as={"textarea"}

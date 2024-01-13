@@ -6,6 +6,7 @@ import LoginForm from "./components/LoginForm";
 import NotesList from "./components/NotesList";
 import NavBarComp from "./components/NavBarComp";
 import AddForm from "./components/AddForm";
+import EditForm from "./components/EditFormModal";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false); //TODO: cachear estos valores para persistir al recargar la pag

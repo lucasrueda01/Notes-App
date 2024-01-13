@@ -2,16 +2,33 @@ import React, { useEffect, useState } from "react";
 import { Table, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import notesService from "./services/notesService";
+import EditFormModal from "./EditFormModal";
 
 export default function NotesList() {
   const [notes, setNotes] = useState([]);
+  const [show, setShow] = useState(false);
+  const [noteToEdit, setNoteToEdit] = useState("");
+
+  //////////////////////////TABLE/////////////////////////////
 
   useEffect(() => {
     notesService.getAllNotes().then((response) => {
       console.log(response);
       setNotes(response.data);
     });
-  }, []);
+  }, [show]);
+
+  //////////////////////////MODAL/////////////////////////////
+
+  const handleClose = () => {
+    setNoteToEdit("");
+    setShow(false);
+  };
+
+  const handleShow = (note) => {
+    setNoteToEdit(note);
+    setShow(true);
+  };
 
   return (
     <div className="table">
@@ -35,18 +52,11 @@ export default function NotesList() {
                   type="submit"
                   className="me-1"
                   size="sm"
-                  as={Link}
-                  to="/edit"
+                  onClick={() => handleShow(note)}
                 >
                   Edit
                 </Button>
-                <Button
-                  variant="secondary"
-                  type="submit"
-                  size="sm"
-                  as={Link}
-                  to="/delete"
-                >
+                <Button variant="secondary" type="submit" size="sm">
                   Delete
                 </Button>
               </td>
@@ -57,6 +67,9 @@ export default function NotesList() {
       <Button variant="secondary" as={Link} to="/add">
         +
       </Button>
+      {show && (
+        <EditFormModal onClose={handleClose} show={true} note={noteToEdit} />
+      )}
     </div>
   );
 }

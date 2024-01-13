@@ -9,7 +9,17 @@ const postNote = (note) => {
   return axios.post(baseUrl + "/notes", note);
 };
 
+const getNoteById = (id) => {
+  return axios.get(baseUrl + "/notes/" + id);
+};
+
+const updateNote = (id, note) => {
+  return axios.put(baseUrl + "/notes/" + id, note);
+};
+
 export default {
   getAllNotes,
   postNote,
+  getNoteById,
+  updateNote,
 };
