@@ -2,6 +2,7 @@ import React from "react";
 import { Form, Button } from "react-bootstrap";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import notesService from "./services/notesService";
 
 export default function AddForm() {
   const [title, setTitle] = useState("");
@@ -24,11 +25,12 @@ export default function AddForm() {
     const newNote = {
       title: title,
       description: description,
-      tags: "",
       archived: false,
     };
-    //POST
-    navigate("/home");
+    notesService.postNote(newNote).then((response) => {
+      console.log(response);
+      navigate("/home");
+    });
   };
   return (
     <div>
