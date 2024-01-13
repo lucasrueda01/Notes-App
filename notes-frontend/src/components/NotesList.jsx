@@ -8,6 +8,7 @@ export default function NotesList() {
   const [notes, setNotes] = useState([]);
   const [show, setShow] = useState(false);
   const [noteToEdit, setNoteToEdit] = useState("");
+  const [noteToDelete, setNoteToDelete] = useState("");
 
   //////////////////////////TABLE/////////////////////////////
 
@@ -16,7 +17,15 @@ export default function NotesList() {
       console.log(response);
       setNotes(response.data);
     });
-  }, [show]);
+  }, [noteToEdit, noteToDelete]);
+
+  const handleDelete = (note) => {
+    setNoteToDelete(note);
+    notesService.deleteNote(note.id).then((response) => {
+      console.log(response);
+      setNoteToDelete("");
+    });
+  };
 
   //////////////////////////MODAL/////////////////////////////
 
@@ -25,7 +34,7 @@ export default function NotesList() {
     setShow(false);
   };
 
-  const handleShow = (note) => {
+  const handleEdit = (note) => {
     setNoteToEdit(note);
     setShow(true);
   };
@@ -52,11 +61,16 @@ export default function NotesList() {
                   type="submit"
                   className="me-1"
                   size="sm"
-                  onClick={() => handleShow(note)}
+                  onClick={() => handleEdit(note)}
                 >
                   Edit
                 </Button>
-                <Button variant="secondary" type="submit" size="sm">
+                <Button
+                  variant="secondary"
+                  type="submit"
+                  size="sm"
+                  onClick={() => handleDelete(note)}
+                >
                   Delete
                 </Button>
               </td>

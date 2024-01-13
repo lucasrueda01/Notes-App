@@ -17,9 +17,14 @@ const updateNote = (id, note) => {
   return axios.put(baseUrl + "/notes/" + id, note);
 };
 
+const deleteNote = (id) => {
+  return axios.delete(baseUrl + "/notes/" + id);
+};
+
 export default {
   getAllNotes,
   postNote,
   getNoteById,
   updateNote,
+  deleteNote,
 };
