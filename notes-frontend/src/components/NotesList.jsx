@@ -50,32 +50,40 @@ export default function NotesList() {
           </tr>
         </thead>
         <tbody>
-          {notes.map((note) => (
-            <tr key={note.id}>
-              <td>{note.title}</td>
-              <td>{note.description}</td>
-              <td></td>
-              <td>
-                <Button
-                  variant="primary"
-                  type="submit"
-                  className="me-1"
-                  size="sm"
-                  onClick={() => handleEdit(note)}
-                >
-                  Edit
-                </Button>
-                <Button
-                  variant="secondary"
-                  type="submit"
-                  size="sm"
-                  onClick={() => handleDelete(note)}
-                >
-                  Delete
-                </Button>
+          {notes.length > 0 ? (
+            notes.map((note) => (
+              <tr key={note.id}>
+                <td>{note.title}</td>
+                <td>{note.description}</td>
+                <td></td>
+                <td>
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    className="me-1"
+                    size="sm"
+                    onClick={() => handleEdit(note)}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    type="submit"
+                    size="sm"
+                    onClick={() => handleDelete(note)}
+                  >
+                    Delete
+                  </Button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="4">
+                <p>No Notes found. Try adding some!</p>
               </td>
             </tr>
-          ))}
+          )}
         </tbody>
       </Table>
       <Button variant="secondary" as={Link} to="/add">
