@@ -19,5 +19,13 @@
 }
 
 .table {
-  margin: 1em;
+  padding: 2em;
+}
+
+.text-white {
+  color: white;
+}
+
+.center  {
+  text-align: center;
 }

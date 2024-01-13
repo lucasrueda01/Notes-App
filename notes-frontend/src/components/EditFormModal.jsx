@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
-import notesService from "./services/notesService";
+import notesService from "../services/notesService";
 
 export default function EditFormModal({ onClose, show, note }) {
   const [title, setTitle] = useState(note.title);
@@ -26,7 +26,6 @@ export default function EditFormModal({ onClose, show, note }) {
     };
 
     notesService.updateNote(note.id, updatedNote).then((response) => {
-      console.log(response);
       onClose();
     });
   };

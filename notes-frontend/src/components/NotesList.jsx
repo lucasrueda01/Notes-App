@@ -1,29 +1,50 @@
 import React, { useEffect, useState } from "react";
 import { Table, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import notesService from "./services/notesService";
+import notesService from "../services/notesService";
 import EditFormModal from "./EditFormModal";
+import SwitchArchiveFilter from "./SwitchArchiveFilter";
 
 export default function NotesList() {
   const [notes, setNotes] = useState([]);
   const [show, setShow] = useState(false);
   const [noteToEdit, setNoteToEdit] = useState("");
-  const [noteToDelete, setNoteToDelete] = useState("");
+  const [refresh, setRefresh] = useState(false);
+  const [archiveFilter, setArchiveFilter] = useState(false);
+
+  const showNotes = (notes) => {
+    if (archiveFilter) {
+      return notes.filter((note) => note.archived);
+    }
+    return notes.filter((note) => !note.archived);
+  };
+
+  const handleSwitchChange = () => {
+    setArchiveFilter(!archiveFilter);
+    setRefresh(!refresh);
+  };
 
   //////////////////////////TABLE/////////////////////////////
 
   useEffect(() => {
     notesService.getAllNotes().then((response) => {
-      console.log(response);
       setNotes(response.data);
     });
-  }, [noteToEdit, noteToDelete]);
+  }, [refresh]);
 
   const handleDelete = (note) => {
-    setNoteToDelete(note);
     notesService.deleteNote(note.id).then((response) => {
-      console.log(response);
-      setNoteToDelete("");
+      setRefresh(!refresh);
+    });
+  };
+
+  const handleArchive = (note) => {
+    const newNote = {
+      ...note,
+      archived: !note.archived,
+    };
+    notesService.updateNote(note.id, newNote).then((response) => {
+      setRefresh(!refresh);
     });
   };
 
@@ -32,26 +53,30 @@ export default function NotesList() {
   const handleClose = () => {
     setNoteToEdit("");
     setShow(false);
+    setRefresh(!refresh);
   };
 
   const handleEdit = (note) => {
     setNoteToEdit(note);
     setShow(true);
+    setRefresh(!refresh);
   };
 
   return (
     <div className="table">
+      <SwitchArchiveFilter handleSwitchChange={handleSwitchChange} />
       <Table striped bordered hover>
         <thead>
-          <tr>
+          <tr className="center">
             <th>Title</th>
             <th>Description</th>
             <th>Tags</th>
+            <th>Options</th>
           </tr>
         </thead>
         <tbody>
           {notes.length > 0 ? (
-            notes.map((note) => (
+            showNotes(notes).map((note) => (
               <tr key={note.id}>
                 <td>{note.title}</td>
                 <td>{note.description}</td>
@@ -59,7 +84,6 @@ export default function NotesList() {
                 <td>
                   <Button
                     variant="primary"
-                    type="submit"
                     className="me-1"
                     size="sm"
                     onClick={() => handleEdit(note)}
@@ -67,12 +91,20 @@ export default function NotesList() {
                     Edit
                   </Button>
                   <Button
-                    variant="secondary"
-                    type="submit"
+                    variant="danger"
+                    className="me-1"
                     size="sm"
                     onClick={() => handleDelete(note)}
                   >
                     Delete
+                  </Button>
+                  <Button
+                    variant="dark"
+                    className="me-1"
+                    size="sm"
+                    onClick={() => handleArchive(note)}
+                  >
+                    {!note.archived ? "Archive" : "Unarchive"}
                   </Button>
                 </td>
               </tr>
@@ -80,13 +112,13 @@ export default function NotesList() {
           ) : (
             <tr>
               <td colSpan="4">
-                <p>No Notes found. Try adding some!</p>
+                <p>No Notes found</p>
               </td>
             </tr>
           )}
         </tbody>
       </Table>
-      <Button variant="secondary" as={Link} to="/add">
+      <Button variant="primary" as={Link} to="/add" size="sm">
         +
       </Button>
       {show && (

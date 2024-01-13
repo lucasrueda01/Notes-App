@@ -2,7 +2,7 @@ import React from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-export default function NavBarComp() {
+export default function NavBarComp({ user }) {
   return (
     <div>
       <Navbar expand="lg" className="bg-body-tertiary" data-bs-theme="dark">

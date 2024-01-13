@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Button } from "react-bootstrap";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import notesService from "./services/notesService";
+import notesService from "../services/notesService";
 
 export default function AddForm() {
   const [title, setTitle] = useState("");
