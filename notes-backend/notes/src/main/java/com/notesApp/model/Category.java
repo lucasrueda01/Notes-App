@@ -18,9 +18,8 @@ public class Category {
 	@Column(name = "name")
 	private String name;
 
-	public Category(Long id, String name) {
+	public Category(String name) {
 		super();
-		this.id = id;
 		this.name = name;
 	}
 

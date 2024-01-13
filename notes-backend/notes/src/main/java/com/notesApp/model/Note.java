@@ -57,9 +57,8 @@ public class Note {
 		this.archived = archived;
 	}
 
-	public Note(Long id, String title, String description, boolean archived) {
+	public Note(String title, String description, boolean archived) {
 		super();
-		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.archived = archived;
