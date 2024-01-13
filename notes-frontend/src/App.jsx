@@ -5,9 +5,10 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import LoginForm from "./components/LoginForm";
 import NotesList from "./components/NotesList";
 import NavBarComp from "./components/NavBarComp";
+import AddForm from "./components/AddForm";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); //TODO: cachear estos valores para persistir al recargar la pag
   const [loggedUser, setLoggedUser] = useState({
     username: "",
     password: "",
@@ -39,6 +40,7 @@ function App() {
           element={<LoginForm onSubmit={handleLogin} onMount={logout} />}
         />
         <Route path="/home" element={<NotesList />} />
+        <Route path="/add" element={<AddForm />} />
       </Routes>
     </>
   );

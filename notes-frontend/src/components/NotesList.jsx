@@ -8,27 +8,27 @@ export default function NotesList() {
       id: 1,
       title: "Nota 1",
       description: "Descripción de la Nota 1",
-      tags: ["importante", "trabajo"],
+      tags: "",
       archived: true,
     },
     {
       id: 2,
       title: "Nota 2",
       description: "Descripción de la Nota 2",
-      tags: ["personal", "tareas"],
+      tags: "",
       archived: false,
     },
     {
       id: 3,
       title: "Nota 3",
       description: "Descripción de la Nota 3",
-      tags: ["viaje", "listas"],
+      tags: "",
       archived: true,
     },
   ]);
 
   return (
-    <div>
+    <div className="table">
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -44,7 +44,7 @@ export default function NotesList() {
               <td>{note.id}</td>
               <td>{note.title}</td>
               <td>{note.description}</td>
-              <td>{note.tags.join(" ")}</td>
+              <td>{note.tags}</td>
               <td>
                 <Button
                   variant="primary"
@@ -70,6 +70,9 @@ export default function NotesList() {
           ))}
         </tbody>
       </Table>
+      <Button variant="secondary" as={Link} to="/add">
+        +
+      </Button>
     </div>
   );
 }

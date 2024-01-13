@@ -45,8 +45,8 @@ export default function LoginForm({ onSubmit, onMount }) {
 
   return (
     <div>
-      <h1 className="app-title">Notes App</h1>
-      <Form className="login-form">
+      <h1 className="main-title">Notes App</h1>
+      <Form className="form">
         <Form.Group className="mb-3" controlId="formBasicUsername">
           <Form.Label>Username</Form.Label>
           <Form.Control
