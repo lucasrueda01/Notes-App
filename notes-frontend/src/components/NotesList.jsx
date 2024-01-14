@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import notesService from "../services/notesService";
 import EditFormModal from "./EditFormModal";
 import SwitchArchiveFilter from "./SwitchArchiveFilter";
+import categoriesService from "../services/categoriesService";
 
 export default function NotesList() {
   const [notes, setNotes] = useState([]);
@@ -27,9 +28,39 @@ export default function NotesList() {
   //////////////////////////TABLE/////////////////////////////
 
   useEffect(() => {
-    notesService.getAllNotes().then((response) => {
-      setNotes(response.data);
-    });
+    const getNotes = () => {
+      // Fetch all notes
+      notesService.getAllNotes().then((notesResponse) => {
+        const notesWithTags = [];
+        // Fetch all categories for each note
+        for (const note of notesResponse.data) {
+          categoriesService
+            .getAllByNoteID(note.id)
+            .then((categoriesResponse) => {
+              // Combine note with its tags
+              const noteWithTags = {
+                ...note,
+                // Map all tag names into tags property
+                tags: categoriesResponse.data,
+              };
+              //Add note to array
+              notesWithTags.push(noteWithTags);
+
+              // Update state when fetched all tags for all notes
+              if (notesWithTags.length === notesResponse.data.length) {
+                // Sort the array by note ID
+                const sortedNotes = [...notesWithTags].sort(
+                  (a, b) => a.id - b.id
+                );
+
+                setNotes(sortedNotes);
+              }
+            });
+        }
+      });
+    };
+
+    getNotes();
   }, [refresh]);
 
   const handleDelete = (note) => {
@@ -80,7 +111,7 @@ export default function NotesList() {
               <tr key={note.id}>
                 <td>{note.title}</td>
                 <td>{note.description}</td>
-                <td></td>
+                <td>{note.tags.map((t) => t.name).join(", ")}</td>
                 <td>
                   <Button
                     variant="primary"

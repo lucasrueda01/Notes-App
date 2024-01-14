@@ -88,7 +88,7 @@ public class CategoryController {
 	
 	@Transactional
 	@DeleteMapping("/notes/{noteId}/category/{categoryId}")
-	public ResponseEntity<HttpStatus> deleteNotes(@PathVariable("noteId") Long noteId, @PathVariable("categoryId") Long categoryId) {
+	public ResponseEntity<HttpStatus> deleteCategoryFromNote(@PathVariable("noteId") Long noteId, @PathVariable("categoryId") Long categoryId) {
 		try {
 			NCrepository.deleteFromNoteCategory(categoryId, noteId); //deletes the relation 
 			categoryRepository.deleteById(categoryId);
@@ -97,5 +97,6 @@ public class CategoryController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
 
 }

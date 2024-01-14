@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseUrl = "http://localhost:8081";
+import { baseUrl } from "../consts";
 
 const getAllNotes = () => {
   return axios.get(baseUrl + "/notes");

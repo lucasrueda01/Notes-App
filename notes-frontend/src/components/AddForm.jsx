@@ -3,10 +3,13 @@ import { Form, Button } from "react-bootstrap";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import notesService from "../services/notesService";
+import TagsForm from "./TagsForm";
+import categoriesService from "../services/categoriesService";
 
 export default function AddForm() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [tags, setTags] = useState([]);
   const navigate = useNavigate();
 
   const handleTitleChange = (e) => {
@@ -21,14 +24,29 @@ export default function AddForm() {
     return true;
   };
 
+  const addTag = (t) => {
+    setTags(tags.concat(t.toUpperCase()));
+  };
+
   const handleAdd = () => {
     const newNote = {
       title: title,
       description: description,
       archived: false,
     };
+    //Post new Note
     notesService.postNote(newNote).then((response) => {
-      console.log(response);
+      const noteID = response.data.id;
+      //After posting Note, post new Category/ies related to the Note.ID
+      for (let i = 0; i < tags.length; i++) {
+        const newCategory = {
+          //format
+          name: tags[i],
+        };
+        categoriesService
+          .postToNoteID(noteID, newCategory)
+          .then((response) => {});
+      }
       navigate("/home");
     });
   };
@@ -57,6 +75,7 @@ export default function AddForm() {
             required
           />
         </Form.Group>
+        <TagsForm handleTag={(t) => addTag(t)} showTags={tags} />
         {checkInputs() ? (
           <Button variant="primary" type="button" onClick={handleAdd}>
             Add Note

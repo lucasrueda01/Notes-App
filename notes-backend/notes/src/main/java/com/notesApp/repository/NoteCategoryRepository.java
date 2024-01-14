@@ -18,5 +18,10 @@ public interface NoteCategoryRepository extends JpaRepository<NoteCategory, Long
 	@Query(value = "DELETE FROM notes_categories nc WHERE nc.categoryid = ?1 AND nc.noteid = ?2", nativeQuery = true)
 	@Transactional
 	void deleteFromNoteCategory(Long categoryId, Long noteId);
+	
+	@Modifying
+	@Query(value = "DELETE FROM notes_categories nc WHERE nc.noteid = ?1", nativeQuery = true)
+	@Transactional
+	void deleteAllFromNoteCategory(Long noteId);
 
 }

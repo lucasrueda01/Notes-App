@@ -3,4 +3,6 @@ const USERADMIN = {
   PASSWORD: "admin",
 };
 
-export { USERADMIN };
+const baseUrl = "http://localhost:8081";
+
+export { USERADMIN, baseUrl };
