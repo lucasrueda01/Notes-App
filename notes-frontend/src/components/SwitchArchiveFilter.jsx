@@ -8,7 +8,7 @@ export default function SwitchArchiveFilter({ handleSwitchChange }) {
         <Form.Switch
           type="switch"
           id="custom-switch"
-          label="Archive"
+          label="Archived"
           onChange={handleSwitchChange}
         />
       </Form>
