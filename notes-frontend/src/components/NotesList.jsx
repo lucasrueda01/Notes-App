@@ -94,9 +94,22 @@ export default function NotesList() {
   }, [refresh]);
 
   const handleDelete = (note) => {
+    if (note.tags.length > 0) {
+      for (const tag of note.tags) {
+        categoriesService
+          .deleteCategoryFromNote(note.id, tag.id) //deletes all tags from that note
+          .then((response) => {});
+      }
+    }
     notesService.deleteNote(note.id).then((response) => {
-      setRefresh(!refresh);
+      setNotes(
+        notes.filter((e) => {
+          e.id !== note.id;
+        })
+      );
     });
+
+    setRefresh(!refresh);
   };
 
   const handleArchive = (note) => {
@@ -145,7 +158,7 @@ export default function NotesList() {
                 {note.tags.length > 0 ? (
                   <td>{note.tags.map((t) => t.name).join(", ")}</td>
                 ) : (
-                  <td>No tags</td>
+                  <td></td>
                 )}
 
                 <td>

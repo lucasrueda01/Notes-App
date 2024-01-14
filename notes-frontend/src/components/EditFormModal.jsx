@@ -59,8 +59,8 @@ export default function EditFormModal({ onClose, show, note }) {
   };
 
   const handleClick = () => {
-    setTagsToShow(tagsToShow.concat({ name: tag, id: null }));
-    setTagsToAdd(tagsToAdd.concat(tag));
+    setTagsToShow(tagsToShow.concat({ name: tag.toUpperCase(), id: null }));
+    setTagsToAdd(tagsToAdd.concat(tag.toUpperCase()));
     setTag("");
   };
 
