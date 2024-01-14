@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.notesApp.model.Note;
+import com.notesApp.repository.NoteCategoryRepository;
 import com.notesApp.repository.NoteRepository;
 
 @CrossOrigin(origins = "http://localhost:5173")
@@ -27,6 +28,8 @@ public class NoteController {
 
 	@Autowired
 	NoteRepository noteRepository;
+	@Autowired
+	NoteCategoryRepository NCrepository;
 
 	@GetMapping("/notes")
 	public ResponseEntity<List<Note>> getAllNotes() {
@@ -82,6 +85,7 @@ public class NoteController {
 	@DeleteMapping("/notes/{id}")
 	public ResponseEntity<HttpStatus> deleteNotes(@PathVariable("id") long id) {
 		try {
+			NCrepository.deleteAllFromNoteCategory(id);
 			noteRepository.deleteById(id);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
