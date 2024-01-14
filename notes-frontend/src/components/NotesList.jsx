@@ -5,6 +5,7 @@ import notesService from "../services/notesService";
 import EditFormModal from "./EditFormModal";
 import SwitchArchiveFilter from "./SwitchArchiveFilter";
 import categoriesService from "../services/categoriesService";
+import SearchFilter from "./SearchFilter";
 
 export default function NotesList() {
   const [notes, setNotes] = useState([]);
@@ -12,17 +13,46 @@ export default function NotesList() {
   const [noteToEdit, setNoteToEdit] = useState("");
   const [refresh, setRefresh] = useState(false);
   const [archiveFilter, setArchiveFilter] = useState(false);
+  const [tagFilter, setTagFilter] = useState("");
 
   const showNotes = (notes) => {
-    if (archiveFilter) {
-      return notes.filter((note) => note.archived);
+    if (tagFilter !== "" && !archiveFilter) {
+      const filteredNotes = notes.filter(
+        (note) => filterMatchesTag(note.tags) && !note.archived
+      );
+      return filteredNotes;
     }
-    return notes.filter((note) => !note.archived);
+
+    if (tagFilter !== "" && archiveFilter) {
+      const filteredNotes = notes.filter(
+        (note) => filterMatchesTag(note.tags) && note.archived
+      );
+      return filteredNotes;
+    }
+
+    if (tagFilter === "" && archiveFilter)
+      return notes.filter((note) => note.archived);
+
+    if (tagFilter === "" && !archiveFilter)
+      return notes.filter((note) => !note.archived);
+  };
+
+  const filterMatchesTag = (noteTags) => {
+    for (const tag of noteTags) {
+      if (tag.name.toLowerCase().includes(tagFilter.toLowerCase())) {
+        return true;
+      }
+    }
+    return false;
   };
 
   const handleSwitchChange = () => {
     setArchiveFilter(!archiveFilter);
     setRefresh(!refresh);
+  };
+
+  const handleFilterChange = (newFilter) => {
+    setTagFilter(newFilter.trim());
   };
 
   //////////////////////////TABLE/////////////////////////////
@@ -95,6 +125,7 @@ export default function NotesList() {
 
   return (
     <div className="table">
+      <SearchFilter onInputChange={handleFilterChange}></SearchFilter>
       <SwitchArchiveFilter handleSwitchChange={handleSwitchChange} />
       <Table striped bordered hover>
         <thead>
