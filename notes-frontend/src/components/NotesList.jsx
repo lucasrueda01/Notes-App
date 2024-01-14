@@ -41,7 +41,7 @@ export default function NotesList() {
               const noteWithTags = {
                 ...note,
                 // Map all tag names into tags property
-                tags: categoriesResponse.data,
+                tags: categoriesResponse.data ? categoriesResponse.data : [],
               };
               //Add note to array
               notesWithTags.push(noteWithTags);
@@ -111,7 +111,12 @@ export default function NotesList() {
               <tr key={note.id}>
                 <td>{note.title}</td>
                 <td>{note.description}</td>
-                <td>{note.tags.map((t) => t.name).join(", ")}</td>
+                {note.tags.length > 0 ? (
+                  <td>{note.tags.map((t) => t.name).join(", ")}</td>
+                ) : (
+                  <td>No tags</td>
+                )}
+
                 <td>
                   <Button
                     variant="primary"

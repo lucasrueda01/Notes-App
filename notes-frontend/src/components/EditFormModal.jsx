@@ -118,26 +118,35 @@ export default function EditFormModal({ onClose, show, note }) {
               >
                 +
               </Button>
-              <p>Tags: {tagsToShow.map((t) => t.name).join(", ")}</p>
-              <Table striped bordered hover>
-                <tbody>
-                  {tagsToShow.map((t, i) => (
-                    <tr key={i}>
-                      <td>{t.name}</td>
-                      <td>
-                        <Button
-                          variant="danger"
-                          className="me-1"
-                          size="sm"
-                          onClick={() => handleDelete(t, i)}
-                        >
-                          Delete
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
+              {tagsToShow.length > 0 ? (
+                <p>Tags: {tagsToShow.map((t) => t.name).join(", ")}</p>
+              ) : (
+                <p>Tags:</p>
+              )}
+
+              {tagsToShow.length > 0 ? (
+                <Table striped bordered hover>
+                  <tbody>
+                    {tagsToShow.map((t, i) => (
+                      <tr key={i}>
+                        <td>{t.name}</td>
+                        <td>
+                          <Button
+                            variant="danger"
+                            className="me-1"
+                            size="sm"
+                            onClick={() => handleDelete(t, i)}
+                          >
+                            Delete
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              ) : (
+                <></>
+              )}
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>
