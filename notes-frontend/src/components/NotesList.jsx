@@ -93,15 +93,15 @@ export default function NotesList() {
     getNotes();
   }, [refresh]);
 
-  const handleDelete = (note) => {
+  const handleDelete = async (note) => {
     if (note.tags.length > 0) {
       for (const tag of note.tags) {
-        categoriesService
+        await categoriesService
           .deleteCategoryFromNote(note.id, tag.id) //deletes all tags from that note
           .then((response) => {});
       }
     }
-    notesService.deleteNote(note.id).then((response) => {
+    await notesService.deleteNote(note.id).then((response) => {
       setNotes(
         notes.filter((e) => {
           e.id !== note.id;
