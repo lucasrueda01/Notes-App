@@ -8,7 +8,7 @@
 
 ### Run Backend
 
-cd notes-backend/backend
+cd notes-backend/notes
 ./mvnw spring-boot:run
 
 ## Frontend
@@ -20,11 +20,11 @@ cd notes-backend/backend
 
 cd notes-frontend
 npm install
-npm start
+npm run dev
 
-### Database config
+### Database
 
--MySQL: v8.0
+-MySQL Server: v8.0
 
 ### App Run
 
