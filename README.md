@@ -3,7 +3,7 @@
 ## Backend
 
 - Framework: Spring Boot v3.2.1
-- Maven: v4.0.0
+- Maven: v4.0
 - JDK: Java 17
 
 ### Run Backend
