@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "../App.css";
 import { USERADMIN } from "../consts";

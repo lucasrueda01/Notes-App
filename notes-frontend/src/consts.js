@@ -3,6 +3,6 @@ const USERADMIN = {
   PASSWORD: "admin",
 };
 
-const baseUrl = "http://localhost:8080";
+const baseUrl = "http://localhost:8080"; //SpringBoot Endpoints
 
 export { USERADMIN, baseUrl };

@@ -58,9 +58,9 @@ export default function NotesList() {
   //////////////////////////TABLE/////////////////////////////
 
   useEffect(() => {
-    const getNotes = () => {
+    const getNotes = async () => {
       // Fetch all notes
-      notesService.getAllNotes().then((notesResponse) => {
+      await notesService.getAllNotes().then((notesResponse) => {
         const notesWithTags = [];
         // Fetch all categories for each note
         for (const note of notesResponse.data) {

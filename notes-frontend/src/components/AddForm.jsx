@@ -25,17 +25,17 @@ export default function AddForm() {
   };
 
   const addTag = (t) => {
-    setTags(tags.concat(t.toUpperCase()));
+    if (t.trim() !== "") setTags(tags.concat(t.toUpperCase().trim()));
   };
 
-  const handleAdd = () => {
+  const handleAdd = async () => {
     const newNote = {
       title: title,
       description: description,
       archived: false,
     };
     //Post new Note
-    notesService.postNote(newNote).then((response) => {
+    await notesService.postNote(newNote).then((response) => {
       const noteID = response.data.id;
       //After posting Note, post new Category/ies related to the Note.ID
       for (let i = 0; i < tags.length; i++) {
@@ -54,7 +54,7 @@ export default function AddForm() {
     <div>
       <Form className="form">
         <h1 className="main-title">Add new Note</h1>
-        <Form.Group className="mb-3" controlId="formBasicName">
+        <Form.Group className="mb-2" controlId="formBasicName">
           <Form.Label>Title</Form.Label>
           <Form.Control
             type="text"
@@ -64,7 +64,7 @@ export default function AddForm() {
             required
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicDescription">
+        <Form.Group className="mb-2" controlId="formBasicDescription">
           <Form.Label>Description</Form.Label>
           <Form.Control
             as={"textarea"}

@@ -12,14 +12,14 @@ export default function EditFormModal({ onClose, show, note }) {
   const [tagsToDelete, setTagsToDelete] = useState([]);
 
   const handleTagChange = (e) => {
-    setTag(e.target.value);
+    setTag(e.target.value.trim());
   };
 
   const handleTitleChange = (e) => {
-    setTitle(e.target.value);
+    setTitle(e.target.value.trim());
   };
   const handleDescriptionChange = (e) => {
-    setDescription(e.target.value);
+    setDescription(e.target.value.trim());
   };
 
   const checkInputs = () => {
@@ -27,14 +27,14 @@ export default function EditFormModal({ onClose, show, note }) {
     return true;
   };
 
-  const onSave = () => {
+  const onSave = async () => {
     const updatedNote = {
       title: title,
       description: description,
       archived: note.archived,
     };
 
-    notesService.updateNote(note.id, updatedNote).then((response) => {
+    await notesService.updateNote(note.id, updatedNote).then((response) => {
       if (tagsToDelete.length > 0) {
         for (const tag of tagsToDelete) {
           categoriesService
@@ -59,9 +59,13 @@ export default function EditFormModal({ onClose, show, note }) {
   };
 
   const handleClick = () => {
-    setTagsToShow(tagsToShow.concat({ name: tag.toUpperCase(), id: null }));
-    setTagsToAdd(tagsToAdd.concat(tag.toUpperCase()));
-    setTag("");
+    if (tag.trim() !== "") {
+      setTagsToShow(
+        tagsToShow.concat({ name: tag.toUpperCase().trim(), id: null })
+      );
+      setTagsToAdd(tagsToAdd.concat(tag.toUpperCase().trim()));
+      setTag("");
+    }
   };
 
   const handleDelete = (t, i) => {
