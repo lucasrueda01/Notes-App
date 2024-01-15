@@ -1,4 +1,4 @@
-# My Full Stack Notes App
+# My Fullstack Notes App
 
 ## Backend
 
@@ -25,6 +25,7 @@ npm run dev
 ### Database
 
 -MySQL Server: v8.0
+Initialization in setup.sh file
 
 ### App Run
 
