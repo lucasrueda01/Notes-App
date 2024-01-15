@@ -8,7 +8,6 @@ import NavBarComp from "./components/NavBarComp";
 import AddForm from "./components/AddForm";
 
 function App() {
-  //////////////Login session persist///////////
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     const storedLoginStatus = localStorage.getItem("isLoggedIn");
     return storedLoginStatus ? JSON.parse(storedLoginStatus) : false;
@@ -26,7 +25,6 @@ function App() {
   useEffect(() => {
     localStorage.setItem("loggedUser", JSON.stringify(loggedUser));
   }, [loggedUser]);
-  /////////////////////////////////////////////
 
   const handleLogin = (user, password) => {
     setIsLoggedIn(true);
